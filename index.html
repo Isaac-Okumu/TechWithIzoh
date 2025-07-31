@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Portfolio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: #111;
+      color: white;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+    }
+    a:hover {
+      color: crimson;
+    }
+    #header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      background: rgba(31, 30, 30, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      z-index: 1000;
+    }
+    .brand {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    .brand span {
+      color: crimson;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav ul li a {
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 1rem;
+      letter-spacing: 0.05rem;
+      padding: 0.5rem 0;
+      display: block;
+      position: relative;
+    }
+    nav ul li a::after {
+      content: attr(data-after);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      color: rgba(255, 0, 0, 0.1);
+      font-size: 5rem;
+      letter-spacing: 0.5rem;
+      z-index: -1;
+      transition: 0.3s ease;
+    }
+    nav ul li:hover a::after {
+      transform: translate(-50%, -50%) scale(1);
+      letter-spacing: initial;
+    }
+    nav ul li:hover a {
+      color: crimson;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 30px;
+      height: 22px;
+      cursor: pointer;
+      z-index: 1010;
+    }
+    .hamburger div {
+      width: 30px;
+      height: 3px;
+      background: white;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      transform-origin: 1px;
+    }
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg);
+    }
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg);
+    }
+    nav {
+      position: relative;
+    }
+    nav ul {
+      transition: left 0.3s ease;
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        position: fixed;
+        top: 60px;
+        left: 100%;
+        width: 100%;
+        height: calc(100vh - 60px);
+        background: #222;
+        padding-top: 2rem;
+        gap: 2rem;
+      }
+      nav ul.active {
+        left: 0;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+    section {
+      padding: 80px 20px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.2rem;
+      color: white;
+    }
+    .section-title span {
+      color: crimson;
+    }
+    #hero {
+      padding-top: 120px;
+      text-align: center;
+    }
+    #hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    #hero .cta {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 10px 30px;
+      border: 2px solid crimson;
+      color: crimson;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.1rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      cursor: pointer;
+    }
+    #hero .cta:hover {
+      background-color: crimson;
+      color: white;
+    }
+    /* Services */
+    #services .service-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 20px;
+    }
+    #services .service-item {
+      flex: 1 1 250px;
+      background: #333;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.7);
+      transition: transform 0.3s ease;
+    }
+    #services .service-item:hover {
+      transform: scale(1.05);
+    }
+    #services .service-item .icon img {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+    #services .service-item h2 {
+      margin-bottom: 10px;
+      color: crimson;
+    }
+    /* Projects */
+    #projects .all-projects {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    #projects .project-item {
+      background: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 300px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+    }
+    #projects .project-item:hover {
+      transform: scale(1.05);
+    }
+    #projects .project-img img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    #projects .project-info {
+      padding: 15px;
+      color: white;
+    }
+    #projects .project-info h1 {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+      color: crimson;
+    }
+    #projects .project-info h2 {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    #projects .project-info p {
+      font-size: 0.9rem;
+    }
+    /* About */
+    #about {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    #about .col-left, #about .col-right {
+      flex: 1 1 300px;
+      max-width: 400px;
+    }
+    #about .about-img img {
+      width: 100%;
+      border-radius: 15px;
+      border: 5px solid crimson;
+    }
+    #about h2 {
+      margin-bottom: 15px;
+      color: crimson;
+    }
+    #about .cta {
+      background: crimson;
+      padding: 10px 20px;
+      color: white;
+      font-weight: 600;
+      border-radius: 5px;
+      display: inline-block;
+      margin-top: 10px;
+    }
+    #about .cta:hover {
+      background: #aa0d0d;
+    }
+    /* Resume */
+    #resume {
+      background: #222;
+      border-radius: 15px;
+      padding: 40px;
+      color: white;
+      max-width: 800px;
+      margin: 40px auto;
+    }
+    #resume h2, #resume h3 {
+      color: crimson;
+      margin-bottom: 10px;
+    }
+    #resume ul {
+      list-style: inside disc;
+      margin-bottom: 20px;
+    }
+    /* Contact */
+    #contact {
+      background: #222;
+      border-radius: 15px;
+      padding: 40px;
+      color: white;
+      max-width: 600px;
+      margin: 40px auto 80px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    }
+    #contact h1 {
+      color: crimson;
+      margin-bottom: 20px;
+    }
+    #contact p {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header id="header">
+  <div class="brand"><span>Isack</span>Okumu SDev</div>
+  <nav>
+    <div class="hamburger" aria-label="Menu" role="button" tabindex="0">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <ul>
+      <li><a href="#hero" data-after="Home">Home</a></li>
+      <li><a href="#services" data-after="Service">Services</a></li>
+      <li><a href="#projects" data-after="Projects">Projects</a></li>
+      <li><a href="#about" data-after="About">About</a></li>
+      <li><a href="#resume" data-after="Resume">Resume</a></li>
+      <li><a href="#contact" data-after="Contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section id="hero">
+  <h1>Hello,</h1>
+  <h1>My Name is</h1>
+  <h1><span>Isack Okumu</span></h1>
+  <a href="#projects" class="cta">Portfolio</a>
+</section>
+
+<section id="services">
+  <h1 class="section-title">Serv<span>i</span>ces</h1>
+  <p style="text-align:center; max-width:600px; margin: 0 auto 2rem;">Pain itself is important and must be dealt with, especially when it comes to greater responsibilities...</p>
+  <div class="service-bottom">
+    <div class="service-item">
+      <div class="icon"><img src="o1.jpg" alt="Outpatient Services" /></div>
+      <h2>Outpatient Services</h2>
+      <p>We provide comprehensive outpatient care including consultations, diagnostics, and minor procedures...</p>
+    </div>
+    <div class="service-item">
+      <div class="icon"><img src="emerg.jpg" alt="Emergency Care" /></div>
+      <h2>Emergency Care</h2>
+      <p>Our 24/7 emergency unit is equipped to handle critical conditions with speed and expertise...</p>
+    </div>
+    <div class="service-item">
+      <div class="icon"><img src="in.webp" alt="Inpatient Services" /></div>
+      <h2>Inpatient Services</h2>
+      <p>We offer clean, comfortable wards and dedicated medical teams for patients needing observation...</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <h1 class="section-title">Recent <span>Projects</span></h1>
+  <div class="all-projects">
+    <div class="project-item">
+      <div class="project-img"><img src="s1.jpg" alt="Social Work System" /></div>
+      <div class="project-info">
+        <h1>Project 1</h1>
+        <h2>Social work system</h2>
+        <p>This section is a placeholder intended to represent how actual content would appear...</p>
+      </div>
+    </div>
+    <div class="project-item">
+      <div class="project-img"><img src="o2.webp" alt="HMIS Booking system" /></div>
+      <div class="project-info">
+        <h1>Project 2</h1>
+        <h2>HMIS Booking system</h2>
+        <p>An HMIS Booking System simplifies hospital appointment scheduling by allowing patients to book...</p>
+      </div>
+    </div>
+    <div class="project-item">
+      <div class="project-img"><img src="t1.png" alt="Training/Research system" /></div>
+      <div class="project-info">
+        <h1>Project 3</h1>
+        <h2>Training/Research system</h2>
+        <p>The Training and Research System is designed to streamline the management of academic programs...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="col-left">
+    <div class="about-img">
+      <img src="pp.jpg" alt="Profile Picture" />
+    </div>
+  </div>
+  <div class="col-right">
+    <h1 class="section-title">About <span>me</span></h1>
+    <h2>Front End Developer</h2>
+    <p>A reliable and efficient system designed to simplify complex tasks...</p>
+    <a href="#resume" class="cta">View Resume</a>
+  </div>
+</section>
+
+<section id="resume">
+  <h1 class="section-title">My <span>Resume</span></h1>
+  <div>
+    <h2>Isack Okumu</h2>
+    <p><strong>Front-End Developer | System Developer</strong></p>
+    <p>📞 +254748282808 | +254736699290</p>
+    <p>📧 isaac.okumu36@gmail.com | isaackokumu@jootrh.go.ke</p>
+    <p>📍 Kisumu & Siaya, Kenya</p>
+
+    <h3>Professional Summary</h3>
+    <p>
+      Creative and detail-oriented Front-End Developer with a strong foundation in web design,
+      system development, and responsive UI/UX implementation. Skilled in building scalable
+      and user-friendly applications using HTML, CSS, JavaScript, and PHP. Proven experience in
+      hospital system interfaces and automation. Passionate about learning new technologies and
+      delivering impactful digital solutions.
+    </p>
+
+    <h3>Technical Skills</h3>
+    <ul>
+      <li><strong>Languages & Tools:</strong> HTML5, CSS3, JavaScript, PHP, MySQL</li>
+      <li><strong>Frameworks:</strong> Bootstrap, basic PHP</li>
+      <li><strong>Version Control:</strong> Git & GitHub</li>
+      <li><strong>Design Tools:</strong> Figma (basic), Canva</li>
+      <li><strong>Other Skills:</strong> UI/UX Design, System Analysis, CMS (WordPress)</li>
+      <li><strong>Soft Skills:</strong> Communication, Team Collaboration, Problem Solving</li>
+    </ul>
+
+    <h3>Projects</h3>
+    <ul>
+      <li>
+        <strong>Social Work System:</strong> Developed a system for managing social work cases,
+        enabling efficient recordkeeping, client follow-ups, and reporting.
+      </li>
+      <li>
+        <strong>HMIS Booking System:</strong> Built an online hospital booking platform for
+        patients to schedule outpatient visits, reducing congestion and improving service flow.
+      </li>
+      <li>
+        <strong>Training & Research System:</strong> Created a portal for tracking training sessions,
+        workshops, and research projects within health institutions.
+      </li>
+    </ul>
+
+    <h3>Professional Services Offered</h3>
+    <ul>
+      <li>Web Design and Front-End Development</li>
+      <li>Hospital Management System Interfaces (Outpatient, Inpatient, Emergency)</li>
+      <li>System Prototyping and UI/UX Wireframing</li>
+      <li>Booking Systems and Information Dashboards</li>
+      <li>Research and Training Management Platforms</li>
+    </ul>
+
+    <h3>Education & Certifications</h3>
+    <ul>
+      <li>Diploma in Information Technology – Maseno University</li>
+      <li>Certificate in Information Technology – Maseno University</li>
+      <li>Certificate in Cybersecurity – ICT Authority Kenya</li>
+      <li>Cisco Certified Network Associate (CCNA) – Cisco</li>
+    </ul>
+
+    <h3>Social Media</h3>
+    <ul>
+      <li>Facebook</li>
+      <li>YouTube</li>
+      <li>WhatsApp</li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact">
+  <h1>Contact Me</h1>
+  <p>📞 Phone: +254748282808, +254736699290</p>
+  <p>📧 Email: isaac.okumu36@gmail.com</p>
+</section>
+
+<script>
+  const hamburger = document.querySelector('.hamburger');
+  const navList = document.querySelector('nav ul');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navList.classList.toggle('active');
+  });
+</script>
+
+</body>
+</html>
