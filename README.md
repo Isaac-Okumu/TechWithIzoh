@@ -78,7 +78,7 @@ If you enjoy my work and would like to support it:
 
 ## 🙌 Acknowledgments
 
-This project structure and tutorial was inspired by [Shaif Arfan](https://www.instagram.com/shaifarfan08/) — credits to his [YouTube channel](https://youtube.com/@ShaifArfan) for great UI/UX walkthroughs.
+This project structure and tutorial was inspired by [Isack](https://www.instagram.com/shaifarfan08/) — credits to his [YouTube channel](https://youtube.com/@isack) for great UI/UX walkthroughs.
 
 ---
 
